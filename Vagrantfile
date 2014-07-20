@@ -18,7 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       box.vm.box = "http://cloud-images.ubuntu.com/vagrant/trusty/20140712/trusty-server-cloudimg-amd64-vagrant-disk1.box"
       box.vm.hostname = name
       box.vm.network "private_network", ip: "10.0.255.#{index + 3}"
-      box.vm.provision "puppet"
+      box.vm.network "forwarded_port", guest: 5432, host: 5432, auto_correct: true
+      
+      box.vm.provision "puppet" do |puppet|
+        puppet.module_path = 'modules'
+        puppet.options = "--show_diff"
+      end
     end
   end
 end
