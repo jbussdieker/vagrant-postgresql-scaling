@@ -1,0 +1,6 @@
+#!/bin/bash -ex
+service postgresql stop
+rm -rf /var/lib/postgresql/9.3/main
+su -c 'pg_basebackup -h <%= @master %> -R -D /var/lib/postgresql/9.3/main -U postgres -x' postgres
+service postgresql start
+touch /var/run/dbsync_complete

@@ -1,0 +1,5 @@
+---
+classes:
+  - postgresql::spare
+ipaddress: '10.0.255.6'
+postgresql::spare::master: '10.0.255.3'

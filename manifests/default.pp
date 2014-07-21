@@ -1,31 +1,8 @@
-file { '/mnt/archive':
-  ensure  => directory,
-  owner   => 'postgres',
-  group   => 'postgres',
-  require => Package['postgresql'],
-}
-
-class { 'postgresql':
-  listen_addresses             => '*',
-  wal_level                    => 'hot_standby',
-  archive_mode                 => 'on',
-  archive_command              => 'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f',
-  max_wal_senders              => '1',
-  hot_standby                  => 'on',
-}
-
-if $hostname != "db1" {
-
-  class { 'scripts':
-  }
-
-  exec { "/home/vagrant/bin/restore-database 10.0.255.3 && /usr/bin/touch /var/tmp/database-restored":
-    creates   => '/var/tmp/database-restored',
-    tries     => 20,
-    try_sleep => 5,
-    require   => [
-      Class['postgresql'],
-      Class['scripts'],
-    ],
-  }
-}
+stage { 'setup':  before => Stage['main'] }
+stage { 'runtime': require => Stage['main'] }
+-> stage { 'setup_infra': }
+-> stage { 'deploy_infra': }
+-> stage { 'setup_app': }
+-> stage { 'deploy_app': }
+-> stage { 'deploy': }
+hiera_include('classes')

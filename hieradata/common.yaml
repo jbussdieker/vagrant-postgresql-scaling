@@ -1,0 +1,11 @@
+---
+classes:
+  - postgresql
+  - postgresql::archive
+postgresql::listen_addresses: '*'
+postgresql::wal_level: 'hot_standby'
+postgresql::archive_mode: true
+postgresql::archive_command: 'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f'
+postgresql::max_wal_senders: 10
+postgresql::hot_standby: true
+postgresql::archive::location: '/mnt/archive'
