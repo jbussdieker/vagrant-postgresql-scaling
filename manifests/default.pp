@@ -6,3 +6,8 @@ stage { 'runtime': require => Stage['main'] }
 -> stage { 'deploy_app': }
 -> stage { 'deploy': }
 hiera_include('classes')
+hiera_array('defines', []).each |$ddd| {
+  $ddd.each |$klass, $options| {
+    create_resources($klass, $options)
+  }
+}

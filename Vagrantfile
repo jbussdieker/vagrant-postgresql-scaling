@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       box.vm.provision "puppet" do |puppet|
         puppet.hiera_config_path = "hiera.yml"
         puppet.module_path = "modules"
-        puppet.options = "--show_diff"
+        puppet.options = "--show_diff --parser future"
       end
     end
   end
