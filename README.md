@@ -7,8 +7,7 @@ Simple hot spare scaling solution using PostgreSQL and fully puppetized setup.
 Bring up database servers one after another.
 
 `````shell
-vagrant up db1
-vagrant up db2
+$ vagrant up
 `````
 
 Do some stuff on db1 and watch it all magically appear on db2.

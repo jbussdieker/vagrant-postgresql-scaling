@@ -10,10 +10,8 @@ class { 'postgresql':
   wal_level                    => 'hot_standby',
   archive_mode                 => 'on',
   archive_command              => 'test ! -f /mnt/archive/%f && cp %p /mnt/archive/%f',
-  max_wal_senders              => '5',
-  wal_keep_segments            => '16',
+  max_wal_senders              => '1',
   hot_standby                  => 'on',
-  wal_receiver_status_interval => '10s',
 }
 
 if $hostname != "db1" {

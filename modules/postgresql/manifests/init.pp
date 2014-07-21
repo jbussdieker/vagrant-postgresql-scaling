@@ -4,9 +4,7 @@ class postgresql(
   $archive_mode = undef,
   $archive_command = undef,
   $max_wal_senders = undef,
-  $wal_keep_segments = undef,
   $hot_standby = undef,
-  $wal_receiver_status_interval = undef,
 ) {
 
   $config_dir = '/etc/postgresql/9.3/main'
