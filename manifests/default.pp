@@ -21,9 +21,11 @@ if $hostname != "db1" {
   class { 'scripts':
   }
 
-  exec { "/home/vagrant/bin/restore-database 10.0.255.3 && touch /var/tmp/database-restored":
-    creates => '/var/tmp/database-restored',
-    require => [
+  exec { "/home/vagrant/bin/restore-database 10.0.255.3 && /usr/bin/touch /var/tmp/database-restored":
+    creates   => '/var/tmp/database-restored',
+    tries     => 20,
+    try_sleep => 5,
+    require   => [
       Class['postgresql'],
       Class['scripts'],
     ],
